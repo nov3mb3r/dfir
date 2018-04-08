@@ -7,6 +7,7 @@ Some of them are provided by the great folks of [SANS](https://github.com/sans-d
 
 ### Install Docker
 Wait! It's dangerous to go alone! 
+
 Make sure you have Docker engine installed. Click [here](https://docs.docker.com/install/) for detailed installation instructions.
 Build the image with one of the following ways :
 
