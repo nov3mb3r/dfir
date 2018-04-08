@@ -1,7 +1,7 @@
 FROM alpine:latest
 LABEL maintainer = "November (novemb3r@protonmail.ch)"
 
-RUN apk add --no-cache py-setuptools perl py-lxml sleuthkit exiftool
+RUN apk add --no-cache py-setuptools perl py-lxml sleuthkit
 RUN apk add --no-cache -t .build \
   ca-certificates \
   py-lxml \
@@ -40,7 +40,6 @@ RUN apk add --no-cache -t .build \
   && git clone https://github.com/sans-dfir/sift-files \
  
   #volatility
-  && alias vol.py="vol.py --plugins=/plugins" \
   && mkdir plugins \
   && cd volatility \
   && python setup.py install \
