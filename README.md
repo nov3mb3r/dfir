@@ -31,5 +31,5 @@ Access your case files with a shared folder between your working directory and t
 
 ##### Preserve the authenticity of your evidence: Make sure you don't tamper with the data, by granting read only permissions to the container. 
 ```
-$ sudo docker run -it -v ~/cases:/cases:ro dfir /bin/ash 
+$ sudo docker run -it -v ~/cases:/cases:ro nov3mb3r/dfir /bin/ash 
 ```
