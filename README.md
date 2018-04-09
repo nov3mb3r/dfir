@@ -22,18 +22,10 @@ sudo docker pull nov3mb3r/dfir
 ```
 Simple isn't it?
 
-### Build from source
-Follow these steps and you are good to go.
-```
-git clone https://github.com/nov3mb3r/dfir-docker.git
-cd dfir-docker
-sudo docker build -t "dfir" .
-```
-
 ### Run 
 To run created image :
 ```
-sudo docker run -it dfir /bin/ash
+sudo docker run -it docker pull nov3mb3r/dfir /bin/ash
 ```
 Access your case files with a shared folder between your working directory and the container.
 
