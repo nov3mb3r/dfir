@@ -25,7 +25,7 @@ Simple isn't it?
 ### Run 
 To run created image :
 ```
-sudo docker run -it docker pull nov3mb3r/dfir /bin/ash
+sudo docker run -it nov3mb3r/dfir /bin/ash
 ```
 Access your case files with a shared folder between your working directory and the container.
 
