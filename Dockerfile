@@ -37,15 +37,16 @@ RUN apk add --no-cache -t .build \
   timelib \
     
   && git clone https://github.com/volatilityfoundation/volatility.git \
-  && git clone https://github.com/sans-dfir/sift-files \
+  && git clone https://github.com/sans-dfir/sift-files.git \
  
   #volatility
-  && mkdir plugins \
+  
   && cd volatility \
   && python setup.py install \
   && cd / \
   && chmod -R 644 /sift-files/volatility/*.py \
-  && mv /sift-files/volatility/*.py /plugins \
+  && mkdir /plugins \
+  && cp /sift-files/volatility/*.py /plugins \
   
   #regripper
   && wget https://cpanmin.us/ -O /bin/cpanm \
@@ -86,6 +87,6 @@ RUN apk add --no-cache -t .build \
   && rm -rf /volatility \
   && apk del --purge .build 
 
-
+ENV VOLATILITY_PLUGINS=/plugins
 
 
