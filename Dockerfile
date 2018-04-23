@@ -88,5 +88,5 @@ RUN apk add --no-cache -t .build \
   && apk del --purge .build 
 
 ENV VOLATILITY_PLUGINS=/plugins
-
+WORKDIR /cases
 
