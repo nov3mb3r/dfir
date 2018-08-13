@@ -37,7 +37,7 @@ RUN apk add --no-cache -t .build \
   timelib \
     
   && git clone https://github.com/volatilityfoundation/volatility.git \
-  && git clone https://github.com/sans-dfir/sift-files.git \
+  && git clone https://github.com/nov3mb3r/sift-files.git \
  
   #volatility
   
