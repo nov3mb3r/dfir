@@ -1,4 +1,4 @@
-# docker Forensic Toolkit
+# dfir
 Collection of the most popular and widely used open-source forensic tools in a lightweight and fast docker image.
 
 ## Overview
