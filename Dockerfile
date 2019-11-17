@@ -101,7 +101,7 @@ RUN pip install https://github.com/guelfoweb/peframe/archive/master.zip \
   && echo "---- Cleaning up ----" \
   && rm -rf /sift-files \
   && rm -rf /volatility \
-  && rm -rf /RegRipper2.8
+  && rm -rf /RegRipper2.8 \
   && apk del --purge .build 
 
 ENV VOLATILITY_PLUGINS=/plugins
