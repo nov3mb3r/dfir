@@ -7,7 +7,7 @@ RUN apk add --no-cache -t .build \
   py-lxml \
   py-pip \
   py-pillow \
-  python-dev \ 
+  python2-dev \ 
   openssl-dev \  
   build-base \ 
   zlib-dev \ 
@@ -22,7 +22,7 @@ RUN apk add --no-cache -t .build \
 
   && export PIP_NO_CACHE_DIR=off \
   && export PIP_DISABLE_PIP_VERSION_CHECK=on \
-  && pip install --upgrade pip \
+  RUN pip install --upgrade pip \
   && pip install distorm3 \
   yara-python \
   pycrypto \  
@@ -36,31 +36,47 @@ RUN apk add --no-cache -t .build \
   dfvfs \
   timelib \
     
-  && git clone https://github.com/volatilityfoundation/volatility.git \
-  && git clone https://github.com/nov3mb3r/sift-files.git \
+  && git clone https://github.com/nov3mb3r/sift-files.git 
  
   #volatility
-  
+RUN git clone https://github.com/volatilityfoundation/volatility.git \
   && cd volatility \
   && python setup.py install \
   && cd / \
   && chmod -R 644 /sift-files/volatility/*.py \
   && mkdir /plugins \
-  && cp /sift-files/volatility/*.py /plugins \
+  && cp /sift-files/volatility/*.py /plugins
   
-  #regripper
-  && wget https://cpanmin.us/ -O /bin/cpanm \
-  && chmod +x /bin/cpanm \
-  && cpanm Parse::Win32Registry \
-  && rm -rf /var/cache/apk/* \
-
-  && mkdir -p /usr/share/regripper \
-  && cp -R sift-files/regripper/* /usr/share/regripper \ 
-  && chmod -R 644 /usr/share/regripper/* \
-  && cp /usr/share/regripper/rip.pl /usr/local/bin/ \ 
+  #prepare perl
+RUN cd /tmp \
+  && wget http://www.cpan.org/src/5.0/perl-5.24.0.tar.gz \
+  && tar xvzf perl-5.24.0.tar.gz \
+  && cd perl-5.24.0 \
+  && ./Configure -des && make && make install \
+  && cd /tmp && rm -rf perl-5.24.0* \
+  && cd /usr/local/bin \
+  && wget https://cpanmin.us/ -O cpanm \
+  && chmod +x cpanm \
+  
+  #prepare reg
+  && mkdir /usr/local/lib/rip-lib \
+  && cpanm -l /usr/local/lib/rip-lib Parse::Win32Registry \
+  
+  #rr download, mod & installation
+  && git clone https://github.com/keydet89/RegRipper2.8.git \ 
+  && cd RegRipper2.8 \
+  && tail -n +2 rip.pl > rip \
+  && perl -pi -e 'tr[\r][]d' rip \
+  && sed -i "1i #!`which perl`" rip \
+  && sed -i '2i use lib qw(/usr/local/lib/rip-lib/lib/perl5/);' rip \
+  && cp rip /usr/local/bin/rip.pl \
+  && chmod +x /usr/local/bin/rip.pl \
+  && mkdir /usr/local/bin/plugins \
+  && cp plugins/* /usr/local/bin/plugins \
+  && cd
 
   #peframe
-  && pip install https://github.com/guelfoweb/peframe/archive/master.zip \ 
+RUN pip install https://github.com/guelfoweb/peframe/archive/master.zip \ 
   
   #manual scripts
   && git clone https://github.com/matonis/page_brute.git \
@@ -85,8 +101,8 @@ RUN apk add --no-cache -t .build \
   && echo "---- Cleaning up ----" \
   && rm -rf /sift-files \
   && rm -rf /volatility \
+  && rm -rf /RegRipper2.8
   && apk del --purge .build 
 
 ENV VOLATILITY_PLUGINS=/plugins
 WORKDIR /cases
-
